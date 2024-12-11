@@ -1,16 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get("ping-auth-service")
+  constructor() {}
+  @Get("ping")
   ping() {
-    return this.appService.pingAuthService();
-  }
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+    return "Pong";
   }
 }

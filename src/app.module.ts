@@ -1,25 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { AppController } from './app.controller'; 
 import * as dotenv from 'dotenv';
+import { AuthGatewayModule } from './auth-gateway/auth-gateway.module';
+import { ConfigModule } from '@nestjs/config';
 
 dotenv.config(); 
 @Module({
   imports: [
-    // TCP Proxy for Auth Service
-    ClientsModule.register([
-      {
-        name: "AUTH_SERVICE",
-        transport: Transport.TCP,
-        options: {
-          host: process.env.HOST,
-          port: parseInt(process.env.AUTHSERVICEPORT, 10),
-        }
-      }
-    ])
-  ],
+    ConfigModule.forRoot({isGlobal : true}), 
+    AuthGatewayModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
